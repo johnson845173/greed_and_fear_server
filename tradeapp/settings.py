@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -75,10 +76,23 @@ WSGI_APPLICATION = 'tradeapp.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': 'algo_db',
+
+        'USER': 'johnson',
+    
+        'PASSWORD': '3fQe8kKtn06JYZFKwxXY2WDWrHdK6yhD',
+
+        'HOST': 'dpg-cdodkspa6gdooi06h5bg-a.singapore-postgres.render.com',
+
+        'PORT': '5432',
+
     }
+
 }
 
 
