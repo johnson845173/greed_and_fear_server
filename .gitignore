@@ -1,2 +1,4 @@
 algoenv
 tradeapp/__pycache__
+api/__pycache__
+**.pyc
