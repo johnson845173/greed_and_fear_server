@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  discord:
+    image: docker.server
+    container_name: django_container
+    ports:
+      - "9999:8000"
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - greed_net
+    expose:
+      - "8000"
+
+networks:
+  lb_net:
+    name: greed_net
+    external: true

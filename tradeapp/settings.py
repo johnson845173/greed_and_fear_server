@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0)j++e^&z5oyyme+56@+^zo4r^-k$$ekhqz*6uf!ejmk9&fda2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,25 +75,25 @@ WSGI_APPLICATION = 'tradeapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
 
-    'default': {
+#     'default': {
 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'algo_db',
+#         'NAME': 'algo_db',
 
-        'USER': 'johnson',
+#         'USER': 'johnson',
     
-        'PASSWORD': '3fQe8kKtn06JYZFKwxXY2WDWrHdK6yhD',
+#         'PASSWORD': '3fQe8kKtn06JYZFKwxXY2WDWrHdK6yhD',
 
-        'HOST': 'dpg-cdodkspa6gdooi06h5bg-a.singapore-postgres.render.com',
+#         'HOST': 'dpg-cdodkspa6gdooi06h5bg-a.singapore-postgres.render.com',
 
-        'PORT': '5432',
+#         'PORT': '5432',
 
-    }
+#     }
 
-}
+# }
 
 
 # Password validation
