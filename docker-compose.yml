@@ -14,6 +14,6 @@ services:
       - "8000"
 
 networks:
-  lb_net:
+  greed_net:
     name: greed_net
     external: true
