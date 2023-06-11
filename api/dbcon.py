@@ -7,7 +7,7 @@ import psycopg2
 def processquery(query: str) -> pd.DataFrame:
     print(HOST)
     conn = psycopg2.connect(
-    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
+    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT, sslmode='require'
     )
 
     """returns the query as pandas dataframe from database
