@@ -16,7 +16,7 @@ def get_tc(request):
 
     tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 1")
 
-    tc_json =tc_df.to_json(orient='index')
+    tc_json =tc_df.to_json(orient='records')
 
     response = json.loads(tc_json)
 
