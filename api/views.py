@@ -20,10 +20,13 @@ def get_tc(request):
 
     response = json.loads(tc_json)
 
-    response["Access-Control-Allow-Origin"] = "*"
-    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-    response["Access-Control-Max-Age"] = "1000"
-    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+    send_head = {
+        "Access-Control-Allow-Origin" : "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers":"X-Requested-With, Content-Type",
+        "Access-Control-Max-Age": "1000"
+        }   
 
-    return Response(response)
+    
+    return Response(response,headers=send_head)
 
