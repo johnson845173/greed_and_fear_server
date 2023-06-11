@@ -18,7 +18,12 @@ def get_tc(request):
 
     tc_json =tc_df.to_json(orient='index')
 
-    tc_json = json.loads(tc_json)
+    response = json.loads(tc_json)
 
-    return Response(tc_json)
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+
+    return Response(response)
 
