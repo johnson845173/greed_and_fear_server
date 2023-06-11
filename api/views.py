@@ -14,7 +14,7 @@ def index(request):
 @api_view(['GET'])
 def get_tc(request):
 
-    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 1")
+    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 1  order by policy_number asc")
 
     tc_json =tc_df.to_json(orient='records')
 
