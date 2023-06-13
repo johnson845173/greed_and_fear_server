@@ -25,6 +25,13 @@ def get_tc(request):
     return Response(response,headers=send_head)
 
 @api_view(['GET'])
+def get_privacy_policy(request):
+    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 4  order by policy_number asc")
+    tc_json =tc_df.to_json(orient='records')
+    response = json.loads(tc_json)
+    return Response(response,headers=send_head)
+
+@api_view(['GET'])
 def get_rev(request):
     tc_df = processquery("SELECT reviewer_name,review_text FROM public.review_master where should_been_shown = true")
     tc_json =tc_df.to_json(orient='records')
