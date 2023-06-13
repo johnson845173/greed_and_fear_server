@@ -6,6 +6,8 @@ from django.http import JsonResponse,HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
+
+from .login_and_sign_up import handle_login
 send_head = {
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -38,3 +40,16 @@ def get_rev(request):
     response = json.loads(tc_json)
     return Response(response,headers=send_head)
 
+
+@api_view(['POST'])
+def login(request):
+    headers = request.headers
+    data = request.data
+    phone_number = data['phone_number']
+    password = data['password']
+    user_id,message = handle_login(phone_number=phone_number,password=password)
+
+    response = {"message_to_show":message}
+    if user_id != 0:
+        send_head['user_id'] = user_id
+    return Response(response,headers=send_head)
