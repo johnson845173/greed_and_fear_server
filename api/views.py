@@ -49,7 +49,7 @@ def login(request):
     password = data['password']
     user_id,message = handle_login(phone_number=phone_number,password=password)
 
-    response = {"message_to_show":message}
+    response = {"message_to_show":message,"user_id":user_id}
     if user_id != 0:
         send_head['user_id'] = user_id
     return Response(response,headers=send_head)
