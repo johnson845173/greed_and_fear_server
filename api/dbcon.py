@@ -27,4 +27,4 @@ def processquery(query: str) -> pd.DataFrame:
     # conn.close()
     return table
 
-# processquery()
+# print(processquery("SELECT * FROM public.user_logs"))
