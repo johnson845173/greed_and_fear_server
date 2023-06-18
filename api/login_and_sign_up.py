@@ -12,7 +12,7 @@ def handle_login(phone_number,password):
     if data is None:
         query = "insert into user_logs (user_id) values (0) returning id"
         id = engine.execute(text(query)).fetchone()
-        engine.dispose()
+        
         print(id)
         return 0,"No user found"
 
@@ -22,14 +22,14 @@ def handle_login(phone_number,password):
             query = f"insert into user_logs (user_id) values ({user_id}) returning id"
             print(query)
             id = engine.execute(text(query)).fetchone()
-            engine.dispose()
+            
             return user_id,f"Welcome {first_name}"
         
         else:
             query = "insert into user_logs (user_id) values (0) returning id"
             id = engine.execute(text(query)).fetchone()
             print(id)
-            engine.dispose()
+            
             return 0,"Wrong Password"
     
 
