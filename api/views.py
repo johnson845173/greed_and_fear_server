@@ -8,6 +8,8 @@ from rest_framework.response import Response
 import json
 
 from .login_and_sign_up import handle_login,log_user
+from .telegram_message import send_message
+
 send_head = {
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -70,3 +72,15 @@ def login(request):
     if user_id != 0:
         send_head['user_id'] = user_id
     return Response(response,headers=send_head)
+
+
+@api_view(['GET','POST'])
+def razorpay_update(request):
+    headers = request.headers
+    data = request.data
+    mesage = {"data":data,"headers":headers}
+    send_message(message=str(mesage))
+    response = {"message":"Success"}
+
+    return Response(response,headers=send_head)
+
