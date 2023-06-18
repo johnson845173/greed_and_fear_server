@@ -47,7 +47,7 @@ def log_user(request):
         query = f"insert into user_logs (user_id,user_agent) values (0,'{user_agent}') returning id"
         engine.execute(text(query)).fetchone()
     
-    engine.dispose()
+    
 
     
 
