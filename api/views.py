@@ -13,8 +13,9 @@ from .telegram_message import send_message
 send_head = {
         "Access-Control-Allow-Origin" : "*",
         "Access-Control-Allow-Methods": "GET, OPTIONS,POST",
-        "Access-Control-Allow-Headers":"X-Requested-With, Content-Type, Accept, Origin, Authorization",
-        "Access-Control-Max-Age": "1000"
+        "Access-Control-Allow-Headers":"*",
+        "Access-Control-Max-Age": "1000",
+        'X-Requested-With':'XMLHttpRequest'
         }   
 
 @api_view(['GET'])
