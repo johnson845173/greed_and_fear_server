@@ -10,5 +10,6 @@ urlpatterns = [
     path('rev/', views.get_rev, name='tc'),
     path('pp/', views.get_privacy_policy, name='pp'),
     path('login/', views.login, name='login_api'),
+    path('preorder/', views.preorder, name='preorder'),
     path('stocks/intra/', views.get_intra_stock, name='login_api'),
 ]

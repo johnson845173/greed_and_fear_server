@@ -84,3 +84,34 @@ def razorpay_update(request):
 
     return Response(response,headers=send_head)
 
+@api_view(['POST'])
+def preorder(request):
+    headers = request.headers
+    data = request.data
+    user_name = data['user_name']
+    email = data['email']
+    phone = data['phone']
+    basic = data['basic']
+    premium = data['premium']
+    elite = data['elite']
+    ew = data['ew']
+    fib = data['fib']
+    
+    query = text(f"""INSERT INTO public.preorder_data(
+	user_name, email, phone, basic, premium, elite, elloit_wave, fibbonaci)
+	VALUES (:user_name, :email, :phone, :basic, :premium, :elite, :elloit_wave, :fibbonaci);""")
+    query = query.bindparams(user_name=user_name, email=email, phone=phone, basic=basic, premium=premium, elite=elite, elloit_wave=ew, fibbonaci=fib)
+    engine.execute(query)
+    response = {"message_to_show":"Added"}
+    return Response(response,headers=send_head)
+
+{
+"user_name":"johnson",
+"email":"johnson@email",
+"phone":7899345443,
+"basic":"true",
+"premium":"true",
+"elite":"true",
+"ew":"true",
+"fib":"false"
+}
