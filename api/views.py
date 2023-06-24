@@ -12,7 +12,7 @@ from .telegram_message import send_message
 
 send_head = {
         "Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Methods": "GET, OPTIONS,POST",
         "Access-Control-Allow-Headers":"X-Requested-With, Content-Type",
         "Access-Control-Max-Age": "1000"
         }   
