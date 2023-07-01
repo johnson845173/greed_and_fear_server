@@ -10,6 +10,7 @@ import os
 import datetime
 import pytz
 import pandas as pd
+import time
 
 class Student_login:
     def __init__(self,file_name) -> None:
@@ -114,7 +115,8 @@ class Student_login:
         self.add_custom_commands()
         self.add_watermark()
         self.add_data()
-        self.doc.generate_pdf(f"{self.file_name}", clean_tex=False, compiler = 'pdflatex')        
+        self.doc.generate_pdf(f"../api/{self.file_name}", clean_tex=False, compiler = 'pdflatex')   
+ 
 
 
 if __name__ == '__main__':

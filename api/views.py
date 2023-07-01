@@ -7,9 +7,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
 from pdf_generation import main
-
+import os
 from .login_and_sign_up import handle_login,log_user
 from .telegram_message import send_message
+import time
+
+import threading
 
 send_head = {
         "Access-Control-Allow-Origin" : "*",
@@ -108,21 +111,28 @@ def preorder(request):
     return Response(response,headers=send_head)
 
 
-@api_view(['post'])
-def sample_pdf(request):
-    data = request.data
+@api_view(['GET'])
+def sample_pdf(request,file_name):
+    # data = request.data
 
-    obj = main.Student_login()
-    file_name = data['file_name']
-    file_path = f"pdf_generation/{file_name}.pdf"
+    # file_name = data['file_name']
+    file_name = file_name
+
+    obj = main.Student_login(file_name=file_name)
+
+    obj.main()
+
+    print("PDF Gen")
+    # time.sleep(5)
+
+    file_path = f"../api/{file_name}.pdf"
 
     with open(file_path, 'rb') as f:
            file_data = f.read()
 
     response = HttpResponse(file_data, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="' + file_path + '"'
+    response['Content-Disposition'] = 'attachment; filename="' + f"{file_name}.pdf" + '"'
     return response
-    # return Response(headers=send_head,data=data)
 
 {
 "user_name":"johnson",
