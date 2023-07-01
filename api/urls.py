@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('log/', views.log_user_view, name='log'),
+    path('sample/', views.sample_pdf, name='log'),
     path('razorpay/webhook/', views.razorpay_update, name='razorpay'),
     path('tc/', views.get_tc, name='tc'),
     path('rev/', views.get_rev, name='tc'),

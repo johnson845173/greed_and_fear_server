@@ -113,7 +113,7 @@ def sample_pdf(request):
 
     file_path = "sample.pdf"
 
-    with open(file_path, 'rb') as f:
+    with open(file_path, 'r') as f:
            file_data = f.read()
 
     response = HttpResponse(file_data, content_type='application/pdf')
