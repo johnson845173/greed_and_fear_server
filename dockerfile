@@ -6,8 +6,9 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-# RUN apt-get install texlive-latex-base
-# RUN apt-get install texlive-fonts-recommended
+RUN apt-get apt-get update
+RUN apt-get install texlive-latex-base
+RUN apt-get install texlive-fonts-recommended
 # RUN apt-get install texlive-fonts-extra
 
 ENTRYPOINT ["python"] 
