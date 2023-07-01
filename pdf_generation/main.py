@@ -12,8 +12,9 @@ import pytz
 import pandas as pd
 
 class Student_login:
-    def __init__(self) -> None:
+    def __init__(self,file_name) -> None:
         os.chdir(os.path.dirname(__file__))
+        self.file_name = file_name
         self.main()
 
 
@@ -101,7 +102,7 @@ class Student_login:
         \setlength{\headsep}{1.8cm}'''))
 
     def add_data(self):
-        self.doc.append(NoEscape('hello'))
+        self.doc.append(NoEscape(r"File Name:"+str(self.file_name)))
 
     def main(self):
         if not os.path.exists("daily_test_report"):
@@ -113,12 +114,12 @@ class Student_login:
         self.add_custom_commands()
         self.add_watermark()
         self.add_data()
-        self.doc.generate_pdf(f"sample", clean_tex=False, compiler = 'pdflatex')        
+        self.doc.generate_pdf(f"{self.file_name}", clean_tex=False, compiler = 'pdflatex')        
 
 
 if __name__ == '__main__':
     # school_test_id = 12
     # ly_test_id_list =  [405199,405205,405209,405212,405194]
     os.chdir(os.path.dirname(__file__))
-    obj = Student_login()
+    obj = Student_login(file_name="2")
      

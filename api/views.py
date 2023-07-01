@@ -108,10 +108,13 @@ def preorder(request):
     return Response(response,headers=send_head)
 
 
-@api_view(['GET'])
+@api_view(['post'])
 def sample_pdf(request):
+    data = request.data
 
-    file_path = "sample.pdf"
+    obj = main.Student_login()
+    file_name = data['file_name']
+    file_path = f"pdf_generation/{file_name}.pdf"
 
     with open(file_path, 'rb') as f:
            file_data = f.read()
