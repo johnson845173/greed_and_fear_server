@@ -125,7 +125,7 @@ def sample_pdf(request,file_name):
     print("PDF Gen")
     # time.sleep(5)
 
-    file_path = f"../api/{file_name}.pdf"
+    file_path = f"../shared_pdf/{file_name}.pdf"
 
     with open(file_path, 'rb') as f:
            file_data = f.read()
@@ -148,7 +148,7 @@ def simple_pdf(request,file_name):
     print("PDF Gen")
     # time.sleep(5)
 
-    file_path = f"../api/{file_name}.pdf"
+    file_path = f"../shared_pdf/{file_name}.pdf"
 
     with open(file_path, 'rb') as f:
            file_data = f.read()
@@ -164,19 +164,21 @@ def view_pdf(request,file_name):
     # file_name = data['file_name']
     file_name = file_name
 
+    file_name = file_name
+
     obj = simple.Student_login(file_name=file_name)
 
     obj.main()
 
     print("PDF Gen")
-    # time.sleep(5)
 
-    file_path = f"../api/{file_name}.pdf"
+    
+    file_path = f"../shared_pdf/{file_name}.pdf"
 
     with open(file_path, 'rb') as f:
-           file_data = f.read()
-
-
+        file_data = f.read()
+    
+    print("Path Exist")
 
     response = HttpResponse(file_data, content_type='application/pdf')
     response["Access-Control-Allow-Methods"]= "GET, OPTIONS,POST"
@@ -184,6 +186,7 @@ def view_pdf(request,file_name):
     response["Access-Control-Max-Age"]= "1000"
     response['X-Requested-With']='XMLHttpRequest'
     response["Access-Control-Allow-Origin"] = "*"
+    response["X-Frame-Options"] = "SAMEORIGIN"
     response['Content-Disposition'] = 'inline; filename="' + f"{file_name}.pdf" + '"'
     return response
 

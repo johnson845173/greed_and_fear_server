@@ -115,7 +115,7 @@ class Student_login:
         # self.add_custom_commands()
         # self.add_watermark()
         self.add_data()
-        self.doc.generate_pdf(f"../api/{self.file_name}", clean_tex=False, compiler = 'pdflatex')   
+        self.doc.generate_pdf(f"../shared_pdf/{self.file_name}", clean_tex=False, compiler = 'pdflatex')   
  
 
 
