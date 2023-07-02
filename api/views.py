@@ -157,6 +157,29 @@ def simple_pdf(request,file_name):
     response['Content-Disposition'] = 'attachment; filename="' + f"{file_name}.pdf" + '"'
     return response
 
+@api_view(['GET'])
+def view_pdf(request,file_name):
+    # data = request.data
+
+    # file_name = data['file_name']
+    file_name = file_name
+
+    obj = simple.Student_login(file_name=file_name)
+
+    obj.main()
+
+    print("PDF Gen")
+    # time.sleep(5)
+
+    file_path = f"../api/{file_name}.pdf"
+
+    with open(file_path, 'rb') as f:
+           file_data = f.read()
+
+    response = HttpResponse(file_data, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="' + f"{file_name}.pdf" + '"'
+    return response
+
 {
 "user_name":"johnson",
 "email":"johnson@email",

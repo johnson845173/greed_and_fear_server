@@ -7,6 +7,7 @@ urlpatterns = [
     path('log/', views.log_user_view, name='log'),
     path('sample/<str:file_name>/', views.sample_pdf, name='log'),
     path('simple/<str:file_name>/', views.simple_pdf, name='log'),
+    path('viewpdf/<str:file_name>/', views.view_pdf, name='log'),
     path('razorpay/webhook/', views.razorpay_update, name='razorpay'),
     path('tc/', views.get_tc, name='tc'),
     path('rev/', views.get_rev, name='tc'),
