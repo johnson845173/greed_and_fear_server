@@ -12,6 +12,8 @@ services:
       - greed_net
     expose:
       - "8000"
+    volumes:
+      - shared_pdf:/root/shared_pdf
 
 networks:
   greed_net:
