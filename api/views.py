@@ -176,7 +176,14 @@ def view_pdf(request,file_name):
     with open(file_path, 'rb') as f:
            file_data = f.read()
 
+
+
     response = HttpResponse(file_data, content_type='application/pdf')
+    response["Access-Control-Allow-Methods"]= "GET, OPTIONS,POST"
+    response["Access-Control-Allow-Headers"]="*"
+    response["Access-Control-Max-Age"]= "1000"
+    response['X-Requested-With']='XMLHttpRequest'
+    response["Access-Control-Allow-Origin"] = "*"
     response['Content-Disposition'] = 'inline; filename="' + f"{file_name}.pdf" + '"'
     return response
 
