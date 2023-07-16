@@ -11,6 +11,7 @@ import os
 from .login_and_sign_up import handle_login,log_user
 from .telegram_message import send_message
 import time
+from minio import Minio
 
 import threading
 
@@ -33,9 +34,32 @@ def log_user_view(request):
 
 @api_view(['GET'])
 def get_intra_stock(request):
-    tc_df = processquery("SELECT stockname,img_path FROM public.stock_master where to_be_displayed = true")
-    tc_json =tc_df.to_json(orient='records')
-    response = json.loads(tc_json)
+    # tc_df = processquery("SELECT stockname,img_path FROM public.stock_master where to_be_displayed = true")
+    # tc_json =tc_df.to_json(orient='records')
+    # response = json.loads(tc_json)
+
+    client = Minio(
+        endpoint="s3.greedandfear.fun",
+        access_key="miniopython",
+        secret_key="O9FNbVbZVD47cEgiAb8nH8548l0ZqYh2b7q61m9L"
+    )
+
+    # Make 'asiatrip' bucket if not exist.
+    # obj = client.get_presigned_url(bucket_name="stock",object_name="logo.jpg",method="GET")
+
+    tc_json = []
+    stocks = client.list_objects(bucket_name="stock")
+    for each_stock in stocks:
+        tc_json.append(
+            {   
+                "stockname":" ",
+                "img_path":f"https://s3.greedandfear.fun/stock/{each_stock.object_name}"
+            }
+        )
+
+    print(tc_json)
+    response = json.loads(json.dumps(tc_json))
+    
     return Response(response,headers=send_head)
 
 
