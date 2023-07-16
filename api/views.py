@@ -50,10 +50,12 @@ def get_intra_stock(request):
     tc_json = []
     stocks = client.list_objects(bucket_name="stock")
     for each_stock in stocks:
+        url = client.get_presigned_url(method="GET",bucket_name="stock",object_name=each_stock.object_name)
+
         tc_json.append(
             {   
                 "stockname":" ",
-                "img_path":f"https://s3.greedandfear.fun/stock/{each_stock.object_name}"
+                "img_path":url
             }
         )
 
@@ -76,14 +78,15 @@ def get_indices_stock(request):
     tc_json = []
     stocks = client.list_objects(bucket_name="indices")
     for each_stock in stocks:
+        url = client.get_presigned_url(method="GET",bucket_name="indices",object_name=each_stock.object_name)
         tc_json.append(
             {   
                 "stockname":" ",
-                "img_path":f"https://s3.greedandfear.fun/indices/{each_stock.object_name}"
+                # "img_path":f"https://s3.greedandfear.fun/indices/{each_stock.object_name}"
+                "img_path":url
             }
         )
 
-    print(tc_json)
     response = json.loads(json.dumps(tc_json))
     
     return Response(response,headers=send_head)
