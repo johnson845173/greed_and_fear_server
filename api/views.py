@@ -79,7 +79,7 @@ def get_indices_stock(request):
         tc_json.append(
             {   
                 "stockname":" ",
-                "img_path":f"https://s3.greedandfear.fun/stock/{each_stock.object_name}"
+                "img_path":f"https://s3.greedandfear.fun/indices/{each_stock.object_name}"
             }
         )
 
