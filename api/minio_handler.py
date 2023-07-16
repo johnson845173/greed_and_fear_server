@@ -12,11 +12,14 @@ def main():
     )
 
     # Make 'asiatrip' bucket if not exist.
-    # obj = client.get_presigned_url(bucket_name="stock",object_name="logo.jpg",method="GET")
+    obj = client.get_presigned_url(bucket_name="logo",object_name="logo.jpg",method="GET")
 
-    stocks = client.list_objects(bucket_name="stock")
+    # stocks = client.list_objects(bucket_name="logo")
 
-    # print(obj)
+    # for _ in stocks:
+    #     print(_._object_name)
+
+    print(obj)
     
     # client.remove_bucket('asiatrip')
     # if not found:

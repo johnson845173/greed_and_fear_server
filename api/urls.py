@@ -15,4 +15,5 @@ urlpatterns = [
     path('login/', views.login, name='login_api'),
     path('preorder/', views.preorder, name='preorder'),
     path('stocks/intra/', views.get_intra_stock, name='login_api'),
+    path('stocks/indices/', views.get_intra_stock, name='login_api'),
 ]
