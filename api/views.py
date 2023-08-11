@@ -82,7 +82,6 @@ def get_indices_stock(request):
         tc_json.append(
             {   
                 "stockname":" ",
-                # "img_path":f"https://s3.greedandfear.fun/indices/{each_stock.object_name}"
                 "img_path":url
             }
         )
@@ -124,12 +123,12 @@ def login(request):
     data = request.data
     phone_number = data['phone_number']
     password = data['password']
-    user_id,message = handle_login(phone_number=phone_number,password=password)
+    user_id,message,status_code = handle_login(phone_number=phone_number,password=password)
 
     response = {"message_to_show":message,"user_id":user_id}
     if user_id != 0:
         send_head['user_id'] = user_id
-    return Response(response,headers=send_head)
+    return Response(response,headers=send_head,status=status_code)
 
 
 @api_view(['GET','POST'])

@@ -14,7 +14,7 @@ def handle_login(phone_number,password):
         id = engine.execute(text(query)).fetchone()
         
         print(id)
-        return 0,"No user found"
+        return 0,"No user found",404
 
     else:
         password_from_db,user_id,first_name = data
@@ -23,14 +23,14 @@ def handle_login(phone_number,password):
             print(query)
             id = engine.execute(text(query)).fetchone()
             
-            return user_id,f"Welcome {first_name}"
+            return user_id,f"Welcome {first_name}",200
         
         else:
             query = "insert into user_logs (user_id) values (0) returning id"
             id = engine.execute(text(query)).fetchone()
             print(id)
             
-            return 0,"Wrong Password"
+            return 0,"Wrong Password",401
     
 
     
