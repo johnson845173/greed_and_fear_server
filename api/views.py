@@ -95,7 +95,7 @@ def get_indices_stock(request):
 @api_view(['GET'])
 def get_tc(request):
     log_user(request=request)
-    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 1  order by policy_number asc")
+    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM policy.policy_data where policy_type = 1  order by policy_number asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
     return Response(response,headers=send_head)
@@ -103,7 +103,7 @@ def get_tc(request):
 @api_view(['GET'])
 def get_privacy_policy(request):
     log_user(request=request)
-    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM public.policy_data where policy_type = 4  order by policy_number asc")
+    tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM policy.policy_data where policy_type = 4  order by policy_number asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
     return Response(response,headers=send_head)
@@ -154,7 +154,7 @@ def preorder(request):
     ew = data['ew']
     fib = data['fib']
     
-    query = text(f"""INSERT INTO public.preorder_data(
+    query = text(f"""INSERT INTO management.preorder_data(
 	user_name, email, phone, basic, premium, elite, elloit_wave, fibbonaci)
 	VALUES (:user_name, :email, :phone, :basic, :premium, :elite, :elloit_wave, :fibbonaci);""")
     query = query.bindparams(user_name=user_name, email=email, phone=phone, basic=basic, premium=premium, elite=elite, elloit_wave=ew, fibbonaci=fib)

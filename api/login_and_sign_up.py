@@ -10,7 +10,7 @@ def handle_login(phone_number,password):
     
     data = engine.execute(text(fetch_pass_query)).fetchone()
     if data is None:
-        query = "insert into user_logs (user_id) values (0) returning id"
+        query = "insert into users.user_logs (user_id) values (0) returning id"
         id = engine.execute(text(query)).fetchone()
         
         print(id)
@@ -19,14 +19,14 @@ def handle_login(phone_number,password):
     else:
         password_from_db,user_id,first_name = data
         if str(password_from_db) == str(password):
-            query = f"insert into user_logs (user_id) values ({user_id}) returning id"
+            query = f"insert into users.user_logs (user_id) values ({user_id}) returning id"
             print(query)
             id = engine.execute(text(query)).fetchone()
             
             return user_id,f"Welcome {first_name}",200
         
         else:
-            query = "insert into user_logs (user_id) values (0) returning id"
+            query = "insert into users.user_logs (user_id) values (0) returning id"
             id = engine.execute(text(query)).fetchone()
             print(id)
             
@@ -41,10 +41,10 @@ def log_user(request):
     user_agent = headers['User-Agent']
     try:
         user_id = headers['uid-greed']
-        query = f"insert into user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
+        query = f"insert into users.user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
         engine.execute(text(query)).fetchone()
     except:
-        query = f"insert into user_logs (user_id,user_agent) values (0,'{user_agent}') returning id"
+        query = f"insert into users.user_logs (user_id,user_agent) values (0,'{user_agent}') returning id"
         engine.execute(text(query)).fetchone()
     
     
