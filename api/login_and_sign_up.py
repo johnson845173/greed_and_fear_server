@@ -5,7 +5,7 @@ from .conf import *
 
 def handle_login(phone_number,password):
     engine = create_engine(f'postgresql+psycopg2://{USER}:gtaVice%401a@{HOST}:{PORT}/{NAME}')
-    fetch_pass_query = f"select password,user_id,first_name from public.user_details where phone_number = {phone_number}"
+    fetch_pass_query = f"select password,user_id,first_name from users.user_details where phone_number = {phone_number}"
     engine = engine.connect()
     
     data = engine.execute(text(fetch_pass_query)).fetchone()
