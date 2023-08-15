@@ -30,7 +30,7 @@ def index(request):
 
 @api_view(['GET'])
 def clear_db(request):
-    query = """select *
+    query = """select 
     pg_terminate_backend(pid)
     from pg_stat_activity
     where state = 'idle' and usename = 'appsmith'"""
