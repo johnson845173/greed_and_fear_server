@@ -16,4 +16,6 @@ urlpatterns = [
     path('preorder/', views.preorder, name='preorder'),
     path('stocks/intra/', views.get_intra_stock, name='login_api'),
     path('stocks/indices/', views.get_indices_stock, name='login_api'),
+
+    path('db/clear/', views.clear_db, name='login_api'),
 ]

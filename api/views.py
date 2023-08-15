@@ -12,6 +12,7 @@ from .login_and_sign_up import handle_login,log_user
 from .telegram_message import send_message
 import time
 from minio import Minio
+from . import dbcon
 
 import threading
 
@@ -26,6 +27,15 @@ send_head = {
 @api_view(['GET'])
 def index(request):
     return HttpResponse("Hello, world. You're at home of api")
+
+@api_view(['GET'])
+def clear_db(request):
+    query = """select *
+    pg_terminate_backend(pid)
+    from pg_stat_activity
+    where state = 'idle' and usename = 'appsmith'"""
+    dbcon.excute_query(query=query)
+    return Response({"message":"sucess"})
 
 @api_view(['GET','POST'])
 def log_user_view(request):
