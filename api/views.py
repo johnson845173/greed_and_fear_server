@@ -13,6 +13,7 @@ from .telegram_message import send_message
 import time
 from minio import Minio
 from . import dbcon
+from . import whatsapp_test
 
 import threading
 
@@ -252,6 +253,14 @@ def view_pdf(request,file_name):
     response['Content-Disposition'] = 'inline; filename="' + f"{file_name}.pdf" + '"'
     return response
 
+@api_view(['POST'])
+def send_reminder(request):
+    headers = request.headers
+    data = request.data
+    user_id = data['user_id']
+    whatsapp_test.send_sub_renew_message(user_id=user_id)
+    response = {"message_to_show":"Sucess","user_id":user_id}
+    return Response(response,headers=send_head,status=200)
 {
 "user_name":"johnson",
 "email":"johnson@email",

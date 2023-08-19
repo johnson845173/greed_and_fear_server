@@ -14,6 +14,9 @@ urlpatterns = [
     path('pp/', views.get_privacy_policy, name='pp'),
     path('login/', views.login, name='login_api'),
     path('preorder/', views.preorder, name='preorder'),
+
+    path('user/remind/', views.send_reminder, name='send_reminder'),
+
     path('stocks/intra/', views.get_intra_stock, name='login_api'),
     path('stocks/indices/', views.get_indices_stock, name='login_api'),
 

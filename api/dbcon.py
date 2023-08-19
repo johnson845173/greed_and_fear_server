@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine,text
 import pandas as pd
-from  .conf import *
+try:
+    from  .conf import *
+except:
+    from conf import *
 import psycopg2
 
 
@@ -42,5 +45,22 @@ def excute_query(query:str):
     finally:
         conn.commit()
         conn.close()
+
+def excute_query_and_return_result(query:str):
+    try:
+        conn = psycopg2.connect(
+    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
+    )
+
+        cursor = conn.cursor()   
+        cursor.execute(query=query)
+        return cursor.fetchall()
+    except Exception as e:
+        print(e)
+        raise Exception(e)
+    finally:
+        conn.commit()
+        conn.close()
+
 
 # print(processquery("SELECT * FROM public.user_logs"))
