@@ -7,7 +7,7 @@ except:
     from dbcon import excute_query_and_return_result
 
 def send_message_by_whatsapp_api(phone_number,message):
-    url  = "https://flyencart.com/api/send"
+    url  = "https://flyencart.com/api/send/"
 
     pay_load = {
         "number": phone_number,
@@ -55,7 +55,7 @@ def send_sub_renew_message(user_id):
     
     message = f"Hey {name} \nTeam Greed and Fear here \n\nYour Subscription is about to end today. Click on below link to Renew it\n\n www.greedandfear.fun/productpage.html "
     # print(message)
-    send_message_by_whatsapp_api(917899404714,message=message)
+    send_message_by_whatsapp_api(phone_number=phone_number,message=message)
 
 if __name__ == "__main__":
     send_sub_renew_message(user_id=1)
