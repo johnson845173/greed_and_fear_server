@@ -122,7 +122,7 @@ def get_privacy_policy(request):
 @api_view(['GET'])
 def get_rev(request):
     log_user(request=request)
-    tc_df = processquery("SELECT reviewer_name,review_text,logo_path FROM public.review_master where should_been_shown = true")
+    tc_df = processquery("SELECT reviewer_name,review_text,logo_path FROM public.review_master where should_been_shown = true order by display_order asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
     return Response(response,headers=send_head)
