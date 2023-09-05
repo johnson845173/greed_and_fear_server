@@ -1,11 +1,14 @@
 from .dbcon import processquery,text,create_engine
 from .conf import *
+from .otp_handler import preprocess_phone_number
 
 
 
 def handle_login(phone_number,password):
     engine = create_engine(f'postgresql+psycopg2://{USER}:gtaVice%401a@{HOST}:{PORT}/{NAME}')
-    fetch_pass_query = f"select password,user_id,first_name from users.user_details where phone_number = {phone_number}"
+    phone_number = preprocess_phone_number(phone_number=phone_number)
+    fetch_pass_query = f"select password,user_id,name from users.user_details where phone_number = '+{phone_number}'"   
+    print(fetch_pass_query)
     engine = engine.connect()
     
     data = engine.execute(text(fetch_pass_query)).fetchone()

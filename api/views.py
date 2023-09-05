@@ -261,6 +261,13 @@ def send_reminder(request):
     whatsapp_test.send_sub_renew_message(user_id=user_id)
     response = {"message_to_show":"Sucess","user_id":user_id}
     return Response(response,headers=send_head,status=200)
+
+
+
+@api_view(['GET'])
+def get_sebi_bans(request):
+    log_user(request=request)
+    return Response({"message":"Success"},headers=send_head)
 {
 "user_name":"johnson",
 "email":"johnson@email",

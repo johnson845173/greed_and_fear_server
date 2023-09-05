@@ -4,3 +4,6 @@ api/__pycache__
 **.pyc
 **.pdf
 **.tex
+**.csv
+**.xlsx
+**.zip

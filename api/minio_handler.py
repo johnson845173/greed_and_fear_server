@@ -6,9 +6,11 @@ def main():
     # Create a client with the MinIO server playground, its access key
     # and secret key.
     client = Minio(
+        
         endpoint="s3.greedandfear.fun",
         access_key="miniopython",
         secret_key="O9FNbVbZVD47cEgiAb8nH8548l0ZqYh2b7q61m9L"
+
     )
 
     # Make 'asiatrip' bucket if not exist.
