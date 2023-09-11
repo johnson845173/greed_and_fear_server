@@ -9,11 +9,13 @@ urlpatterns = [
     path('simple/<str:file_name>/', views.simple_pdf, name='log'),
     path('viewpdf/<str:file_name>/', views.view_pdf, name='log'),
     path('razorpay/webhook/', views.razorpay_update, name='razorpay'),
+
     path('tc/', views.get_tc, name='tc'),
     path('rev/', views.get_rev, name='tc'),
     path('pp/', views.get_privacy_policy, name='pp'),
     path('login/', views.login, name='login_api'),
     path('preorder/', views.preorder, name='preorder'),
+    path('bans/', views.get_sebi_bans_view, name='preorder'),
 
     path('user/remind/', views.send_reminder, name='send_reminder'),
 

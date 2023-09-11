@@ -7,19 +7,22 @@ def main():
     # and secret key.
     client = Minio(
         
-        endpoint="s3.greedandfear.fun",
+        endpoint="139.59.22.99:9000",
         access_key="miniopython",
         secret_key="O9FNbVbZVD47cEgiAb8nH8548l0ZqYh2b7q61m9L"
-
+        ,secure=False
     )
 
     # Make 'asiatrip' bucket if not exist.
     # obj = client.get_presigned_url(bucket_name="logo",object_name="logo.jpg",method="GET")
 
-    stocks = client.list_objects(bucket_name="qrbucket",prefix="basic")
+    bucket_name = "logopics"
 
-    for _ in stocks:
-        print(_._object_name)
+    stocks = client.list_objects(bucket_name=f"{bucket_name}")
+
+    for each_stock in stocks:
+        print(each_stock.object_name)
+        client.fget_object(bucket_name=f"{bucket_name}",file_path=f"{bucket_name}/{each_stock.object_name}",object_name=each_stock.object_name)
 
     # print(obj)
     

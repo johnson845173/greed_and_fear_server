@@ -118,7 +118,45 @@ def get_sebi_bans():
     conn.commit()
     conn.close()
 
+def get_sebi_bans_method():
+
+    sebi_bans_url = "https://nsearchives.nseindia.com/content/fo/fo_secban.csv"
+
+    data = requests.get(url=sebi_bans_url, headers=headers, timeout=10)
+
+    with open("bans.csv", 'wb') as file:
+        file.write(data.content)
+
+    no_skip_df = pd.read_csv("bans.csv")
+
+    df = pd.read_csv("bans.csv", skiprows=1, names=['sl', 'symbol'])
+
+
+    title = no_skip_df.columns.values[0]
+
+    pattern = r"Trade Date (\d{2}-[A-Z]{3}-\d{4}):"
+
+    match = re.search(pattern, title)
+
+    if match:
+        trade_date = match.group(1)
+    else:
+        raise Exception("Date not found.")
+
+    date_format = "%d-%b-%Y"
+
+    date_of_ban = datetime.datetime.strptime(trade_date, date_format).strftime("%Y-%m-%d")
+
+    data_to_send = {
+        "date_of_ban":date_of_ban,
+        "stock_list":df['symbol'].to_list()
+    }
+
+    return data_to_send
+
+
 
 if __name__ == '__main__':
-    get_oi_sebi()
-    get_sebi_bans()
+    print(get_sebi_bans_method())
+    # get_oi_sebi()
+    # get_sebi_bans()
