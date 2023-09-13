@@ -3,8 +3,8 @@ services:
   discord:
     image: docker.server
     container_name: django_container
-    ports:
-      # - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
