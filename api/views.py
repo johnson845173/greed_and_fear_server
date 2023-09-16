@@ -272,5 +272,5 @@ def update_sebi_bans_view(request):
     return Response({"message":"Success"},headers=send_head)
 
 
-@api_view(['GET'])
-def get_sebi_bans
+# @api_view(['GET'])
+# def get_sebi_bans
