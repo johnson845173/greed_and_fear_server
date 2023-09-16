@@ -14,7 +14,7 @@ import time
 from minio import Minio
 from . import dbcon
 from . import whatsapp_test
-from .nse_handler import get_sebi_bans_method
+from . import nse_handler
 
 import threading
 
@@ -266,17 +266,11 @@ def send_reminder(request):
 
 
 @api_view(['GET'])
-def get_sebi_bans_view(request):
-    data = get_sebi_bans_method()
-    return Response({"message":"Success","data":data},headers=send_head)
+def update_sebi_bans_view(request):
+    nse_handler.get_oi_sebi()
+    nse_handler.get_sebi_bans()
+    return Response({"message":"Success"},headers=send_head)
 
-{
-"user_name":"johnson",
-"email":"johnson@email",
-"phone":7899345443,
-"basic":"true",
-"premium":"true",
-"elite":"true",
-"ew":"true",
-"fib":"false"
-}
+
+@api_view(['GET'])
+def get_sebi_bans

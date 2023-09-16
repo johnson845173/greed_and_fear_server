@@ -154,9 +154,9 @@ def get_sebi_bans_method():
 
     return data_to_send
 
-4
+
 
 if __name__ == '__main__':
-    print(get_sebi_bans_method())
+    # print(get_sebi_bans_method())
     get_oi_sebi()
     get_sebi_bans()
