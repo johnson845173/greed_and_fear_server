@@ -16,6 +16,7 @@ urlpatterns = [
     path('login/', views.login, name='login_api'),
     path('preorder/', views.preorder, name='preorder'),
     path('bans/update/', views.update_sebi_bans_view, name='preorder'),
+    path('bans/get/', views.get_sebi_bans_view, name='preorder'),
 
     path('user/remind/', views.send_reminder, name='send_reminder'),
 

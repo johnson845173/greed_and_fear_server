@@ -154,9 +154,54 @@ def get_sebi_bans_method():
 
     return data_to_send
 
+def get_nse_bans_from_data_base(date_of_trade="",date_to_compare=""):
+    query = f"""with today_ban as
+        (select symbol as today_symbol,
+                date_of_ban as today_date_of_ban
+            from trade.sebi_ban_master
+            where date_of_ban = '{date_of_trade}'),
+        yesterday_ban as
+        (select symbol,
+                date_of_ban
+            from trade.sebi_ban_master
+            where date_of_ban = '{date_to_compare}'),
+        ban_data as
+        (select *
+            from today_ban tb
+            full outer join yesterday_ban yb on tb.today_symbol = yb.symbol)
+            
+    select 
+    case
+    when today_date_of_ban is null then symbol::text
+    when date_of_ban is null then today_symbol::text
+    when date_of_ban is not null and today_date_of_ban is not null then today_symbol::text
+    end Stock
+    ,
+    case
+    when today_date_of_ban is null then 'Unbanned'::text
+    when date_of_ban is null then 'New Ban'::text
+    when date_of_ban is not null and today_date_of_ban is not null then 'Ban Continue'::text
+    end ban_status
+    from ban_data"""
 
+    df = dbcon.processquery(query=query)
+    
+    new_ban = df.loc[df['ban_status'] == 'New Ban']['stock'].to_list()
+    ban_con = df.loc[df['ban_status'] == 'Ban Continue']['stock'].to_list()
+    un_ban = df.loc[df['ban_status'] == 'Unbanned']['stock'].to_list()
+
+    ban_data_to_send = {
+        "date_of_trade":date_of_trade,
+        "date_to_compare":date_to_compare,
+        "unbanned":un_ban,
+        "ban_continue":ban_con,
+        "new_ban":new_ban,
+    }
+
+    return ban_data_to_send
 
 if __name__ == '__main__':
     # print(get_sebi_bans_method())
-    get_oi_sebi()
-    get_sebi_bans()
+    # get_oi_sebi()
+    # get_sebi_bans()
+    get_nse_bans_from_data_base()

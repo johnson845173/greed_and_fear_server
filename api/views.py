@@ -15,6 +15,7 @@ from minio import Minio
 from . import dbcon
 from . import whatsapp_test
 from . import nse_handler
+import datetime
 
 import threading
 
@@ -271,6 +272,18 @@ def update_sebi_bans_view(request):
     nse_handler.get_sebi_bans()
     return Response({"message":"Success"},headers=send_head)
 
+@api_view(['GET'])
+def get_sebi_bans_view(request):
+
+    query_parameter = request.query_params
+
+    date_to_compare = query_parameter.get('date_to_compare',datetime.datetime.today().strftime("%Y-%m-%d"))
+
+    date_of_trade = query_parameter.get('date_of_trade',(datetime.datetime.today() + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+
+    data = nse_handler.get_nse_bans_from_data_base(date_to_compare=date_to_compare,date_of_trade=date_of_trade)
+
+    return Response({"message":"Success","data":data},headers=send_head)
 
 # @api_view(['GET'])
 # def get_sebi_bans
