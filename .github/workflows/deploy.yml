@@ -10,18 +10,26 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: Install SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan your_vps_ip >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+      env:
+        SSHKEY: ${{ secrets.SSHKEY }}
 
-
-    - name: Executing remote command
-      uses: ./
-      with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
+    - name: SSH into VPS and run commands
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa {{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
+        cd django
+        git pull
+        docker build --tag "docker.server" .
+        docker-compose up -d
+        EOF
+      env:
+        SSHKEY: ${{ secrets.SSHKEY }}
+        HOST: ${{ secrets.HOST }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        script:
-          cd django
-          git pull
-          docker build --tag "docker.server" .
-          docker compose up -d
-        
+        USERNAME: ${{ secrets.USERNAME }}
