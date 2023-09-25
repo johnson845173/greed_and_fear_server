@@ -29,7 +29,7 @@ send_head = {
 
 @api_view(['GET'])
 def index(request):
-    return HttpResponse("Hello, world. You're at home of api")
+    return Response({"message":"Success"},headers=send_head)
 
 @api_view(['GET'])
 def clear_db(request):

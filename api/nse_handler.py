@@ -57,9 +57,12 @@ def get_oi_sebi():
 
     df = df[['date', 'symbol', 'mwpl', 'open_interest']]
 
+
+
     conn, cursor = dbcon.create_connection()
 
     for index, row in df.iterrows():
+        print(f"{index+1}/{df.shape[0]}")
         parsed_date = datetime.datetime.strptime(row['date'], "%d-%b-%Y")
         formatted_date = parsed_date.strftime("%Y-%m-%d")
         dbcon.update_sebi_oi(date=formatted_date, symbol=row['symbol'],
@@ -82,7 +85,7 @@ def get_sebi_bans():
     sebi_bans_url = "https://nsearchives.nseindia.com/content/fo/fo_secban.csv"
 
     data = requests.get(url=sebi_bans_url, headers=headers, timeout=10)
-
+    
     with open("bans.csv", 'wb') as file:
         file.write(data.content)
 
@@ -183,7 +186,8 @@ def get_nse_bans_from_data_base(date_of_trade="",date_to_compare=""):
     when date_of_ban is not null and today_date_of_ban is not null then 'Ban Continue'::text
     end ban_status
     from ban_data"""
-
+    
+    print(query)
     df = dbcon.processquery(query=query)
     
     new_ban = df.loc[df['ban_status'] == 'New Ban']['stock'].to_list()
@@ -202,6 +206,6 @@ def get_nse_bans_from_data_base(date_of_trade="",date_to_compare=""):
 
 if __name__ == '__main__':
     # print(get_sebi_bans_method())
-    # get_oi_sebi()
+    get_oi_sebi()
     # get_sebi_bans()
-    get_nse_bans_from_data_base()
+    # get_nse_bans_from_data_base()

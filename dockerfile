@@ -2,6 +2,10 @@ FROM python:3.10.7-buster
 
 WORKDIR /.
 
+COPY requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt
+
 COPY . .
 
 
@@ -12,7 +16,6 @@ COPY . .
 # RUN miktexsetup finish
 # RUN initexmf --set-config-value [MPM]AutoInstall=1
 
-RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"] 
 

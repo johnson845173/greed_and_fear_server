@@ -92,7 +92,9 @@ def update_sebi_oi(date,symbol,mwpl,oi,cursor):
     DO UPDATE SET
         mwpl = EXCLUDED.mwpl,
         open_interest = EXCLUDED.open_interest;"""
-
+    
+    print(query)
+    
     excute_query_without_commit(query=query,cursor=cursor)
 
 # print(processquery("SELECT * FROM public.user_logs"))
