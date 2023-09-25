@@ -13,7 +13,7 @@ jobs:
 
 
     - name: Executing remote command
-      uses: appleboy/ssh-action@master
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
