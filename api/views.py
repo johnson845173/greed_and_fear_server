@@ -43,7 +43,7 @@ def clear_db(request):
 @api_view(['GET','POST'])
 def log_user_view(request):
     log_user(request=request)
-    return Response({"message":"Success"},headers=send_head)
+    return Response({"message":"Success6"},headers=send_head)
 
 @api_view(['GET'])
 def get_intra_stock(request):
