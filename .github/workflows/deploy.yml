@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    # - uses: actions/checkout@v1
 
     - name: Install SSH key and configure known_hosts
       run: |
@@ -27,7 +27,7 @@ jobs:
         cd django
         git pull
         docker build --tag "docker.server" .
-        docker-compose up -d
+        docker compose up -d
         EOF
       env:
         SSHKEY: ${{ secrets.SSHKEY }}
