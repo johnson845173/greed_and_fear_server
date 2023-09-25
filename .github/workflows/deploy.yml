@@ -23,7 +23,7 @@ jobs:
 
     - name: SSH into VPS and run commands
       run: |
-        ssh $USERNAME@$HOST << 'EOF'
+        ssh -tt $USERNAME@$HOST << 'EOF'
         cd django
         git pull
         docker build --tag "docker.server" .
