@@ -155,6 +155,7 @@ def get_sebi_bans_method():
         "stock_list":df['symbol'].to_list()
     }
 
+    print(data_to_send)
     return data_to_send
 
 def get_nse_bans_from_data_base(date_of_trade="",date_to_compare=""):
@@ -207,5 +208,5 @@ def get_nse_bans_from_data_base(date_of_trade="",date_to_compare=""):
 if __name__ == '__main__':
     # print(get_sebi_bans_method())
     get_oi_sebi()
-    # get_sebi_bans()
+    get_sebi_bans_method()
     # get_nse_bans_from_data_base()
