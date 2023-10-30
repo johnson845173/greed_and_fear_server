@@ -6,6 +6,8 @@ from django.http import JsonResponse,HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
+from . import otp_handler
+from rest_framework import status
 from pdf_generation import main,simple
 import os
 from .login_and_sign_up import handle_login,log_user
@@ -285,5 +287,28 @@ def get_sebi_bans_view(request):
 
     return Response({"message":"Success","data":data},headers=send_head)
 
-# @api_view(['GET'])
-# def get_sebi_bans
+@api_view(['POST'])
+def send_whatspp_otp_view(request):
+    try:
+        phone_number = request.data.get("phone_number")
+
+        otp = otp_handler.set_otp(phone_number=phone_number)
+
+        whatsapp_test.send_whatsapp_otp_message(phone_number=phone_number,otp=otp)
+
+        return Response({"message":"Success"},headers=send_head,status=status.HTTP_200_OK)
+    except:
+        return Response({"message":"Failed"},headers=send_head,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def validate_whatspp_otp_view(request):
+    try:
+        phone_number = request.data.get("phone_number")
+
+        user_otp = request.data.get("user_otp")
+
+        validation_sucess_json = otp_handler.validate_otp(phone_number=phone_number,user_otp=user_otp)
+        
+        return Response(data=validation_sucess_json,headers=send_head,status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"message":"Failed","error":str(e)},headers=send_head,status=status.HTTP_500_INTERNAL_SERVER_ERROR)

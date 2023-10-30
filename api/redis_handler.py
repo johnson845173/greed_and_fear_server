@@ -1,9 +1,10 @@
 import requests
 import redis
 import time
+OTP_VALIDITY = 120
 
 
-def set_redis_otp(phone_number,otp,validity=60):
+def set_redis_otp(phone_number,otp,validity=OTP_VALIDITY):
 
     r = redis.Redis(host='cache.greedandfear.fun', port=6379, decode_responses=True,password="eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81")
 
@@ -11,14 +12,16 @@ def set_redis_otp(phone_number,otp,validity=60):
 
     r.close()
 
-def get_redis_otp(phone_numbery):
+def get_redis_otp(phone_number):
     r = redis.Redis(host='cache.greedandfear.fun', port=6379, decode_responses=True,password="eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81")
 
-    stored_otp = r.get(name=phone_numbery)
+    stored_otp = r.get(name=phone_number)
     
     r.close()
-
-    return stored_otp
+    try:
+        return int(stored_otp) 
+    except:
+        return 0
 
 def clear_redis():
     r = redis.Redis(host='cache.greedandfear.fun', port=6379, decode_responses=True,password="eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81")

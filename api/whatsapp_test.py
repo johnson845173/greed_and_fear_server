@@ -11,13 +11,14 @@ except:
     from otp_handler import preprocess_phone_number
 
 def send_message_by_whatsapp_api(phone_number,message):
+    phone_number = preprocess_phone_number(phone_number=phone_number)
     url  = "https://flyencart.com/api/send/"
 
     pay_load = {
         "number": phone_number,
         "type": "text",
         "message": message,
-        "instance_id": "64E0706F523C7",
+        "instance_id": "64E899A929C49",
         "access_token": "64dde5ca2cc72"
     }
 
@@ -123,7 +124,8 @@ def send_promo():
         time.sleep(i)
 
 if __name__ == "__main__":
-    send_promo()
+    # send_promo()
     # send_sub_renew_message(user_id=13)
+    send_whatsapp_otp_message("7899404714",otp="894537")
     # send_whatsapp_otp_message("916363941989",otp="894537")
     
