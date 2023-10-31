@@ -54,6 +54,7 @@ def get_intra_stock(request):
     intra_stocks = cache.get('intra_stocks')
 
     if intra_stocks is not None:
+        send_head['is_cached'] = True
         return Response(intra_stocks,headers=send_head)
         
     # tc_df = processquery("SELECT stockname,img_path FROM public.stock_master where to_be_displayed = true")
