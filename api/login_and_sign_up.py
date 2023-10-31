@@ -41,10 +41,11 @@ def log_user(request):
 
     headers = request.headers
     user_agent = headers['User-Agent']
-    user_id = headers['uid-greed']
-
-    if user_id is None:
+    try:
+        user_id = headers['uid-greed']
+    except:
         user_id = 0
+
     query = f"insert into users.user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
 
     excute_query(query=query)
