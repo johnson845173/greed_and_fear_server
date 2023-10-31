@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.cache import cache
 
 from .dbcon import processquery,engine,text
 # Create your views here.
@@ -49,6 +50,12 @@ def log_user_view(request):
 
 @api_view(['GET'])
 def get_intra_stock(request):
+
+    intra_stocks = cache.get('intra_stocks')
+
+    if intra_stocks is not None:
+        return Response(intra_stocks,headers=send_head)
+        
     # tc_df = processquery("SELECT stockname,img_path FROM public.stock_master where to_be_displayed = true")
     # tc_json =tc_df.to_json(orient='records')
     # response = json.loads(tc_json)
@@ -74,9 +81,10 @@ def get_intra_stock(request):
             }
         )
 
-    print(tc_json)
     response = json.loads(json.dumps(tc_json))
     
+    cache.set(key='intra_stocks',value=tc_json,timeout=36000)
+
     return Response(response,headers=send_head)
 
 @api_view(['GET'])
