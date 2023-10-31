@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.cache import cache
 
-from .dbcon import processquery,engine,text
+from .dbcon import processquery,text
 # Create your views here.
 from django.http import JsonResponse,HttpResponse
 from rest_framework.decorators import api_view
@@ -184,7 +184,7 @@ def preorder(request):
 	user_name, email, phone, basic, premium, elite, elloit_wave, fibbonaci)
 	VALUES (:user_name, :email, :phone, :basic, :premium, :elite, :elloit_wave, :fibbonaci);""")
     query = query.bindparams(user_name=user_name, email=email, phone=phone, basic=basic, premium=premium, elite=elite, elloit_wave=ew, fibbonaci=fib)
-    engine.execute(query)
+    dbcon.excute_query(query)
     response = {"message_to_show":"Added"}
     return Response(response,headers=send_head)
 

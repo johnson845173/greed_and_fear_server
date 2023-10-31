@@ -7,7 +7,6 @@ except:
 import psycopg2
 
 
-engine = create_engine(f'postgresql+psycopg2://{USER}:gtaVice%401a@{HOST}/{NAME}')
 
 # conn = psycopg2.connect(
 #     database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
