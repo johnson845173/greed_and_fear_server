@@ -56,7 +56,7 @@ def get_intra_stock(request):
     if intra_stocks is not None:
         send_head['is_cached'] = True
         response = Response(intra_stocks,headers=send_head)
-        response.set_cookie(key="Test_key",value="test_value",max_age=10000)
+        # response.set_cookie(key="Test_key",value="test_value",max_age=10000)
         return response
         
     # tc_df = processquery("SELECT stockname,img_path FROM public.stock_master where to_be_displayed = true")

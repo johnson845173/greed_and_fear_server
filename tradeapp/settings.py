@@ -71,7 +71,7 @@ CACHES = {
 
 # CORS_ALLOWED_ORIGINS = ['*']
 
-# CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://api.greedandfear.fun']
 
 ROOT_URLCONF = 'tradeapp.urls'
 
