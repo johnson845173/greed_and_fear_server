@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +58,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHES = {
+    'default': {
+        "BACKEND": "django_redis.cache.RedisCache",
+        'LOCATION': 'redis://server.greedandfear.fun:6379',
+        'OPTIONS': {
+            'PASSWORD': os.getenv(key="REDISPASSWORD")
+        }
+    },
+}
+
+
 # CORS_ALLOWED_ORIGINS = ['*']
 
 # CSRF_TRUSTED_ORIGINS = ['*']
@@ -82,25 +97,25 @@ WSGI_APPLICATION = 'tradeapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
+DATABASES = {
 
-#     'default': {
+    'default': {
 
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-#         'NAME': 'algo_db',
+        'NAME': os.getenv(key="NAME"),
 
-#         'USER': 'johnson',
+        'USER': os.getenv(key="USER"),
     
-#         'PASSWORD': '3fQe8kKtn06JYZFKwxXY2WDWrHdK6yhD',
+        'PASSWORD': os.getenv(key="PASSWORD"),
 
-#         'HOST': 'dpg-cdodkspa6gdooi06h5bg-a.singapore-postgres.render.com',
+        'HOST': os.getenv(key="HOST"),
 
-#         'PORT': '5432',
+        'PORT': os.getenv(key="PORT"),
 
-#     }
+    }
 
-# }
+}
 
 
 # Password validation

@@ -1,4 +1,4 @@
-from .dbcon import processquery,text,create_engine
+from .dbcon import processquery,text,create_engine,excute_query
 from .conf import *
 from .otp_handler import preprocess_phone_number
 
@@ -38,19 +38,17 @@ def handle_login(phone_number,password):
 
     
 def log_user(request):
-    engine = create_engine(f'postgresql+psycopg2://{USER}:gtaVice%401a@{HOST}:{PORT}/{NAME}')
 
     headers = request.headers
     user_agent = headers['User-Agent']
-    try:
-        user_id = headers['uid-greed']
-        query = f"insert into users.user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
-        engine.execute(text(query)).fetchone()
-    except:
-        query = f"insert into users.user_logs (user_id,user_agent) values (0,'{user_agent}') returning id"
-        engine.execute(text(query)).fetchone()
-    
-    
+    user_id = headers['uid-greed']
+
+    if user_id is None:
+        user_id = 0
+    query = f"insert into users.user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
+
+    excute_query(query=query)
+      
 
     
 
