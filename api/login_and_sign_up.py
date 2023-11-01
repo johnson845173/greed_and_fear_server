@@ -1,6 +1,9 @@
-from .dbcon import processquery,text,create_engine,excute_query,excute_query_and_return_result
+from .dbcon import processquery,text,create_engine,excute_query,excute_query_and_return_result,create_connection,excute_query_without_commit
 from .conf import *
 from .otp_handler import preprocess_phone_number
+from ipware import get_client_ip
+
+conn,cursor = create_connection()
 
 
 
@@ -28,23 +31,37 @@ def handle_login(phone_number,password):
             excute_query(query=query)
             
             return 0,"Wrong Password",401
-    
 
     
 def log_user(request):
 
+    global conn
+    global cursor
+
     headers = request.headers
     user_agent = headers['User-Agent']
+    user_ip = request.META.get('REMOTE_ADDR','0.0.0.0')
+
+    # print(request.get_full_path())
+
+    request_url = request.build_absolute_uri()
+
     try:
         user_id = headers['uid-greed']
     except:
         user_id = 0
 
-    query = f"insert into users.user_logs (user_id,user_agent) values ({user_id},'{user_agent}') returning id"
+    query = f"insert into users.user_logs (user_id,user_agent,user_ip,request_url) values ({user_id},'{user_agent}','{user_ip}','{request_url}') returning id"
 
-    excute_query(query=query)
-      
+    if conn.closed == 0:
 
+        excute_query_without_commit(query=query,cursor=cursor)
+        conn.commit()
+    else:
+    
+        conn,cursor = create_connection()
+        excute_query_without_commit(query=query,cursor=cursor)
+        conn.commit()
     
 
 

@@ -120,15 +120,24 @@ def get_indices_stock(request):
 
 @api_view(['GET'])
 def get_tc(request):
-    log_user(request=request)
+    tc_json = cache.get('tc_json')
+
+    if tc_json is not None:
+        send_head['is_cached'] = True
+        response = Response(json.loads(tc_json),headers=send_head)
+        # response.set_cookie(key="Test_key",value="test_value",max_age=10000)
+        return response
+    
     tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM policy.policy_data where policy_type = 1  order by policy_number asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
+
+    cache.set(key='tc_json',value=tc_json,timeout=36000)
+
     return Response(response,headers=send_head)
 
 @api_view(['GET'])
 def get_privacy_policy(request):
-    log_user(request=request)
     tc_df = processquery("SELECT policy_number,policy_heading,policy_text FROM policy.policy_data where policy_type = 4  order by policy_number asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
@@ -136,7 +145,6 @@ def get_privacy_policy(request):
 
 @api_view(['GET'])
 def get_rev(request):
-    log_user(request=request)
     tc_df = processquery("SELECT reviewer_name,review_text,logo_path FROM public.review_master where should_been_shown = true order by display_order asc")
     tc_json =tc_df.to_json(orient='records')
     response = json.loads(tc_json)
