@@ -12,6 +12,7 @@ dbus-python==1.2.18
 defer==1.0.6
 distro==1.7.0
 distro-info==1.1+ubuntu0.1
+django-ipware==5.0.2
 httplib2==0.20.2
 idna==3.3
 importlib-metadata==4.6.4
