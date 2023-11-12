@@ -18,11 +18,11 @@ def send_message_by_whatsapp_api(phone_number,message):
         "number": phone_number,
         "type": "text",
         "message": message,
-        "instance_id": "64E899A929C49",
+        "instance_id": "65510B7414177",
         "access_token": "64dde5ca2cc72"
     }
 
-
+    print(pay_load)
 
     data = requests.post(url=url,data=pay_load)
 
