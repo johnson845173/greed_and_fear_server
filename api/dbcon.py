@@ -8,9 +8,15 @@ import psycopg2
 
 
 
-# conn = psycopg2.connect(
-#     database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
-#     )
+
+def create_connection():
+    conn = psycopg2.connect(
+    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
+    )
+    
+    return conn
+
+conn = create_connection()
 
 def processquery(query: str) -> pd.DataFrame:
     conn = psycopg2.connect(
@@ -30,50 +36,44 @@ def processquery(query: str) -> pd.DataFrame:
     conn.close()
     return table
 
-def excute_query(query:str):
+def excute_query(query:str,vars={}):
+
+    global conn
+
     try:
-        conn = psycopg2.connect(
-    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
-    )
-
+        if conn.closed != 0:
+            conn = create_connection()
         cursor = conn.cursor()   
-        cursor.execute(query=query)
-    except Exception as e:
-        print(e)
-        raise Exception(e)
-    finally:
+        cursor.execute(query=query,vars=vars)
         conn.commit()
+    except Exception as e:
         conn.close()
-
+        raise Exception(e)
+    
+    
 def excute_query_without_commit(cursor,query):
     try:
         cursor.execute(query=query)
     except Exception as e:
         raise Exception(e)
-    
-def create_connection():
-    conn = psycopg2.connect(
-    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
-    )
-    cursor = conn.cursor()   
 
-    return conn,cursor
 
-def excute_query_and_return_result(query:str):
+
+def excute_query_and_return_result(query:str,vars={}):
     try:
-        conn = psycopg2.connect(
-    database=NAME , user=USER, password= PASSWORD, host=HOST , port= PORT
-    )
+        global conn
+   
+        if conn.closed != 0:
+            conn = create_connection()
 
         cursor = conn.cursor()   
-        cursor.execute(query=query)
-        return cursor.fetchall()
+        cursor.execute(query=query,vars=vars)
+        data =  cursor.fetchall()
+
+        return data
     except Exception as e:
-        print(e)
-        raise Exception(e)
-    finally:
-        conn.commit()
         conn.close()
+        raise Exception(e)
 
 def update_sebi_ban(date_of_ban,symbol,sl,cursor):
     query = """INSERT INTO trade.sebi_ban_master (sl, date_of_ban, symbol)
@@ -92,7 +92,6 @@ def update_sebi_oi(date,symbol,mwpl,oi,cursor):
         mwpl = EXCLUDED.mwpl,
         open_interest = EXCLUDED.open_interest;"""
     
-    print(query)
     
     excute_query_without_commit(query=query,cursor=cursor)
 

@@ -3,7 +3,9 @@ from .conf import *
 from .otp_handler import preprocess_phone_number
 from ipware import get_client_ip
 
-conn,cursor = create_connection()
+conn = create_connection()
+
+cursor = conn.cursor()
 
 
 
@@ -59,7 +61,8 @@ def log_user(request):
         conn.commit()
     else:
     
-        conn,cursor = create_connection()
+        conn = create_connection()
+        cursor = conn.cursor()
         excute_query_without_commit(query=query,cursor=cursor)
         conn.commit()
     

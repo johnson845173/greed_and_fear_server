@@ -59,14 +59,20 @@ def get_oi_sebi():
 
 
 
-    conn, cursor = dbcon.create_connection()
+    conn = dbcon.create_connection()
+    
+    cursor = conn.cursor()
 
     for index, row in df.iterrows():
         print(f"{index+1}/{df.shape[0]}")
         parsed_date = datetime.datetime.strptime(row['date'], "%d-%b-%Y")
         formatted_date = parsed_date.strftime("%Y-%m-%d")
-        dbcon.update_sebi_oi(date=formatted_date, symbol=row['symbol'],
+        
+        try:
+            dbcon.update_sebi_oi(date=formatted_date, symbol=row['symbol'],
                              mwpl=row['mwpl'], oi=row['open_interest'], cursor=cursor)
+        except:
+            conn.rollback()
 
     conn.commit()
     conn.close()
@@ -93,7 +99,9 @@ def get_sebi_bans():
 
     df = pd.read_csv("bans.csv", skiprows=1, names=['sl', 'symbol'])
 
-    conn, cursor = dbcon.create_connection()
+    conn = dbcon.create_connection()
+    
+    cursor = conn.cursor()
 
     title = no_skip_df.columns.values[0]
 
